@@ -1,0 +1,14 @@
+Control
+
+A          - left
+D          - right
+
+SPASE      - jump
+left CTRL  - pause
+
+ESC        - escape
+ENTER      - start
+
+(when jumped to the cloud)
+E          - move cloud to right 
+Q          - move cloud to left 
