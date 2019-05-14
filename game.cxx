@@ -6,10 +6,10 @@ int main(int /*argc*/, char* /*argv*/[])
     engine obj;
 
     obj.set_window_width(1280);
-  obj.set_window_height(720);
+    obj.set_window_height(720);
 
-    //obj.set_window_width(1920);
-    //obj.set_window_height(1080);
+    // obj.set_window_width(1920);
+    // obj.set_window_height(1080);
 
     obj.set_resources_path("res/");
 

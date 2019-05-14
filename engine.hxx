@@ -20,6 +20,8 @@
 #include <thread>
 #include <vector>
 
+#include <fstream>
+
 PFNGLCREATESHADERPROC             glCreateShader             = nullptr;
 PFNGLSHADERSOURCEPROC             glShaderSource             = nullptr;
 PFNGLCOMPILESHADERPROC            glCompileShader            = nullptr;
@@ -225,7 +227,7 @@ public:
         window = SDL_CreateWindow("Miller in the Fire", SDL_WINDOWPOS_CENTERED,
                                   SDL_WINDOWPOS_CENTERED, width, height,
                                   ::SDL_WINDOW_OPENGL);
-        SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+        // SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
         SDL_ShowCursor(SDL_DISABLE);
 
         if (window == nullptr)
@@ -614,7 +616,7 @@ public:
     }
 
     //================== загрузка png файла =============================
-    int load_png(std::string file_name)
+    GLuint load_png(std::string file_name)
     {
         //        //найдем длину png файла
         //        std::ifstream myFile;
@@ -683,10 +685,8 @@ public:
             throw std::runtime_error("can't load texture");
         }
         //=== загрузка изображения под андроид конец ===
-
         texture_id++;
         glActiveTexture_(GL_TEXTURE0 + texture_id);
-
         glGenTextures(1, &texture_id);
         glBindTexture(GL_TEXTURE_2D, texture_id);
         GLint mipmap_level = 0;
@@ -699,10 +699,33 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-        // png_file.clear();
-        // image.clear();
-        // n++;
-        // std::cout << "picture loaded number = " << n << std::endl;
+        //начало записи лога
+        std::ofstream logfile;
+        if (program_start_flag)
+        {
+            program_start_flag = false;
+            logfile.open("log.txt", std::ios::out); //очистим файл
+            if (!logfile.is_open())
+            {
+                std::cerr << "Cannot open logfile \n";
+                return EXIT_FAILURE;
+            }
+            logfile << "Picture " << file_name
+                    << " is loaded with id = " << texture_id << "\n";
+        }
+        else
+        {
+            logfile.open("log.txt", std::ios::out | std::ios::app);
+            if (!logfile.is_open())
+            {
+                std::cerr << "Cannot open logfile \n";
+                return EXIT_FAILURE;
+            }
+            logfile << "Picture " << file_name
+                    << " is loaded with id = " << texture_id << "\n";
+        }
+        logfile.close();
+        //конец записи лога
 
         return texture_id;
     }
@@ -737,6 +760,8 @@ public:
     ~engine() { SDL_Quit(); }
 
 private:
+    bool program_start_flag = true;
+
     SDL_Window* window  = nullptr;
     GLuint      program = 0;
 
