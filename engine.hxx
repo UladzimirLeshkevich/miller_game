@@ -275,6 +275,8 @@ public:
 
         deviceId = SDL_OpenAudioDevice(device_name, 0, &wavSpec, NULL, 0);
         SDL_PauseAudioDevice(deviceId, 0);
+
+        return true;
     }
 
     //===== загрузка звукового файла  =====
