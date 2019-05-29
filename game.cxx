@@ -1,9 +1,15 @@
+#include "count_for_timer.hxx"
 #include "engine.hxx"
+#include "load_texture.hxx"
+#include "save_game_time.hxx"
 
 int main(int /*argc*/, char* /*argv*/[])
 {
     //заводим движок
     engine obj;
+
+    float time = read_time_frome_file();
+    std::cout << "777 " << time << "\n";
 
     obj.set_window_width(1280);
     obj.set_window_height(720);
@@ -16,95 +22,12 @@ int main(int /*argc*/, char* /*argv*/[])
     obj.initialize();
 
     //загружаем текстуры и делаем спрайты
-    int platform     = obj.load_png("platform.png");
-    int raindrop     = obj.load_png("raindrop.png");
-    int cloud_t      = obj.load_png("cloud.png");
-    int background_t = obj.load_png("background.png");
-    int millbase_0   = obj.load_png("millbase.png");
-    int millbase     = obj.load_png("millbase2.png");
-    int down         = obj.load_png("down.png");
-    int up           = obj.load_png("up.png");
-    int right        = obj.load_png("right.png");
-    int left         = obj.load_png("left.png");
-    int over_t       = obj.load_png("over.png");
-    int title_t      = obj.load_png("title.png");
-    int pause_t      = obj.load_png("pause.png");
-
-    std::vector<int> idle_sprite;
-    idle_sprite.push_back(obj.load_png("Idle (1).png"));
-    idle_sprite.push_back(obj.load_png("Idle (2).png"));
-    idle_sprite.push_back(obj.load_png("Idle (3).png"));
-    idle_sprite.push_back(obj.load_png("Idle (4).png"));
-    idle_sprite.push_back(obj.load_png("Idle (5).png"));
-    idle_sprite.push_back(obj.load_png("Idle (6).png"));
-    idle_sprite.push_back(obj.load_png("Idle (7).png"));
-    idle_sprite.push_back(obj.load_png("Idle (8).png"));
-    idle_sprite.push_back(obj.load_png("Idle (9).png"));
-    idle_sprite.push_back(obj.load_png("Idle (10).png"));
-
-    std::vector<int> run_sprite;
-    run_sprite.push_back(obj.load_png("Run (1).png"));
-    run_sprite.push_back(obj.load_png("Run (2).png"));
-    run_sprite.push_back(obj.load_png("Run (3).png"));
-    run_sprite.push_back(obj.load_png("Run (4).png"));
-    run_sprite.push_back(obj.load_png("Run (5).png"));
-    run_sprite.push_back(obj.load_png("Run (6).png"));
-    run_sprite.push_back(obj.load_png("Run (7).png"));
-    run_sprite.push_back(obj.load_png("Run (8).png"));
-
-    std::vector<int> jump_sprite;
-    jump_sprite.push_back(obj.load_png("Jump (1).png"));
-    jump_sprite.push_back(obj.load_png("Jump (2).png"));
-    jump_sprite.push_back(obj.load_png("Jump (3).png"));
-    jump_sprite.push_back(obj.load_png("Jump (4).png"));
-    jump_sprite.push_back(obj.load_png("Jump (5).png"));
-    jump_sprite.push_back(obj.load_png("Jump (6).png"));
-    jump_sprite.push_back(obj.load_png("Jump (7).png"));
-    jump_sprite.push_back(obj.load_png("Jump (8).png"));
-    jump_sprite.push_back(obj.load_png("Jump (9).png"));
-    jump_sprite.push_back(obj.load_png("Jump (10).png"));
-
-    std::vector<int> dead_sprite;
-    dead_sprite.push_back(obj.load_png("Dead (1).png"));
-    dead_sprite.push_back(obj.load_png("Dead (2).png"));
-    dead_sprite.push_back(obj.load_png("Dead (3).png"));
-    dead_sprite.push_back(obj.load_png("Dead (4).png"));
-    dead_sprite.push_back(obj.load_png("Dead (5).png"));
-    dead_sprite.push_back(obj.load_png("Dead (6).png"));
-    dead_sprite.push_back(obj.load_png("Dead (7).png"));
-    dead_sprite.push_back(obj.load_png("Dead (8).png"));
-    dead_sprite.push_back(obj.load_png("Dead (9).png"));
-    dead_sprite.push_back(obj.load_png("Dead (10).png"));
-
+    load_texture(obj);
     std::vector<int> rising_sprite;
     rising_sprite = dead_sprite;
     std::reverse(rising_sprite.begin(), rising_sprite.end());
 
-    std::vector<int> fire_sprite;
-    fire_sprite.push_back(obj.load_png("fire_ani.png"));
-    fire_sprite.push_back(obj.load_png("fire_ani2.png"));
-    fire_sprite.push_back(obj.load_png("fire_ani3.png"));
-    fire_sprite.push_back(obj.load_png("fire_ani4.png"));
-    fire_sprite.push_back(obj.load_png("fire_ani5.png"));
-    fire_sprite.push_back(obj.load_png("fire_ani4.png"));
-    fire_sprite.push_back(obj.load_png("fire_ani3.png"));
-    fire_sprite.push_back(obj.load_png("fire_ani2.png"));
-
-    std::vector<int> long_fire_sprite;
-    long_fire_sprite.push_back(obj.load_png("long_fire.png"));
-    long_fire_sprite.push_back(obj.load_png("long_fire2.png"));
-    long_fire_sprite.push_back(obj.load_png("long_fire3.png"));
-    long_fire_sprite.push_back(obj.load_png("long_fire4.png"));
-    long_fire_sprite.push_back(obj.load_png("long_fire5.png"));
-
-    std::vector<int> bell_sprite;
-    bell_sprite.push_back(obj.load_png("bell.png"));
-    bell_sprite.push_back(obj.load_png("bell2.png"));
-    bell_sprite.push_back(obj.load_png("bell3.png"));
-    bell_sprite.push_back(obj.load_png("bell2.png"));
-
     //загружаем звуки
-    // sound_buffer e2          = obj.load_sound("highlands.wav", &e2);
     sound_buffer jump         = obj.load_sound("jump1.wav", &jump);
     sound_buffer fire_sound   = obj.load_sound("fire2.wav", &fire_sound);
     sound_buffer bell_sound   = obj.load_sound("bell.wav", &bell_sound);
@@ -499,6 +422,17 @@ restart:; //рестарт игры после game over!
     timer  jump_timer;
     double delta_time2 = 0;
 
+    //таймер для времени игры
+    timer  game_timer;
+    timer  game_timer_full_time;
+    double number_for_timer;
+
+    int sec = 0, sec2 = 0;
+    int min = 0, min2 = 0;
+
+    float biggest_time   = 0;
+    float this_game_time = 0;
+
     //анимация дождя
     float  rain_speed  = -0.008f;
     float  rain_speed2 = -0.01f;
@@ -560,6 +494,17 @@ restart:; //рестарт игры после game over!
     {
 
         loop = obj.events();
+
+        //====== таймер =====
+        number_for_timer = game_timer.elapsed();
+        // this_game_time   = game_timer_full_time.elapsed();
+
+        if (number_for_timer >= 1)
+        {
+            count_for_timer(min, min2, sec, sec2);
+            game_timer.reset();
+        }
+        //====== таймер конец=====
 
         //====== главное окно! ======
         if (first_start)
@@ -708,7 +653,6 @@ restart:; //рестарт игры после game over!
 
             pause_flag = true;
             obj.pause_ms(250);
-            // obj.play_sound(&e2);
             obj.play_sound(&marsh_sound);
         }
         while (pause_flag)
@@ -743,6 +687,11 @@ restart:; //рестарт игры после game over!
         //====== game over! ======
         if (game_over_flag)
         {
+            save_file(min2, min, sec2, sec);
+            this_game_time = game_timer_full_time.elapsed();
+            std::cout << "this_game_time " << this_game_time << "\n";
+            write_time(this_game_time);
+
             game_over_pause_flag = true;
             obj.stop_sound(&bell_sound);
             obj.stop_sound(&bell_sound2);
@@ -2919,6 +2868,21 @@ restart:; //рестарт игры после game over!
 
         obj.render_textured_triangle(cloud, cloud_t);
         obj.render_textured_triangle(cloud1, cloud_t);
+
+        //рендер таймера
+        // timer_render_seconds(obj, sec, sec2);
+        obj.render_textured_triangle(seconds, time_sprite.at(sec));
+        obj.render_textured_triangle(seconds1, time_sprite.at(sec));
+        obj.render_textured_triangle(seconds2, time_sprite.at(sec2));
+        obj.render_textured_triangle(seconds3, time_sprite.at(sec2));
+
+        obj.render_textured_triangle(dot, dot_t);
+        obj.render_textured_triangle(dot1, dot_t);
+
+        obj.render_textured_triangle(minutes, time_sprite.at(min));
+        obj.render_textured_triangle(minutes1, time_sprite.at(min));
+        obj.render_textured_triangle(minutes2, time_sprite.at(min2));
+        obj.render_textured_triangle(minutes3, time_sprite.at(min2));
 
         obj.swap_buffers();
     } //КОНЕЦ ИГРОВОГО ЦИКЛА

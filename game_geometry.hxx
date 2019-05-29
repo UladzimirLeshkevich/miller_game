@@ -719,3 +719,51 @@ triangle title_bl_up1, title_bl_up2;
 triangle title_bl_down1, title_bl_down2;
 triangle title_bl_right1, title_bl_right2;
 triangle title_bl_left1, title_bl_left2;
+
+//таймер геометрия
+triangle seconds, seconds1, seconds2, seconds3;
+triangle minutes, minutes1, minutes2, minutes3;
+triangle dot, dot1;
+
+//точка
+dot.v[0] = { -0.94f, 0.8f, 0.0f, 1.0f };
+dot.v[1] = { -0.94f, 1.0f, 0.0f, 0.0f };
+dot.v[2] = { -0.89f, 0.8f, 1.0f, 1.0f };
+
+dot1.v[0] = { -0.89f, 1.0f, 1.0f, 0.0f };
+dot1.v[1] = { -0.94f, 1.0f, 0.0f, 0.0f };
+dot1.v[2] = { -0.89f, 0.8f, 1.0f, 1.0f };
+
+//секунды
+seconds.v[0] = { -0.84f, 0.8f, 0.0f, 1.0f };
+seconds.v[1] = { -0.84f, 1.0f, 0.0f, 0.0f };
+seconds.v[2] = { -0.79f, 0.8f, 1.0f, 1.0f };
+
+seconds1.v[0] = { -0.79f, 1.0f, 1.0f, 0.0f };
+seconds1.v[1] = { -0.84f, 1.0f, 0.0f, 0.0f };
+seconds1.v[2] = { -0.79f, 0.8f, 1.0f, 1.0f };
+
+seconds2.v[0] = { -0.89f, 0.8f, 0.0f, 1.0f };
+seconds2.v[1] = { -0.89f, 1.0f, 0.0f, 0.0f };
+seconds2.v[2] = { -0.84f, 0.8f, 1.0f, 1.0f };
+
+seconds3.v[0] = { -0.844f, 1.0f, 1.0f, 0.0f };
+seconds3.v[1] = { -0.89f, 1.0f, 0.0f, 0.0f };
+seconds3.v[2] = { -0.84f, 0.8f, 1.0f, 1.0f };
+
+//минуты
+minutes.v[0] = { -0.95f, 0.8f, 0.0f, 1.0f };
+minutes.v[1] = { -0.95f, 1.0f, 0.0f, 0.0f };
+minutes.v[2] = { -0.9f, 0.8f, 1.0f, 1.0f };
+
+minutes1.v[0] = { -0.9f, 1.0f, 1.0f, 0.0f };
+minutes1.v[1] = { -0.95f, 1.0f, 0.0f, 0.0f };
+minutes1.v[2] = { -0.9f, 0.8f, 1.0f, 1.0f };
+
+minutes2.v[0] = { -1.0f, 0.8f, 0.0f, 1.0f };
+minutes2.v[1] = { -1.0f, 1.0f, 0.0f, 0.0f };
+minutes2.v[2] = { -0.95f, 0.8f, 1.0f, 1.0f };
+
+minutes3.v[0] = { -0.95f, 1.0f, 1.0f, 0.0f };
+minutes3.v[1] = { -1.0f, 1.0f, 0.0f, 0.0f };
+minutes3.v[2] = { -0.95f, 0.8f, 1.0f, 1.0f };
